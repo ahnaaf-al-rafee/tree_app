@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row text-center">
+    <div class="col-md-12">
+      <h1 class="display-4">About Tree Academy</h1>
+      <p class="lead">World-class learning for anyone, anywhere</p>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'home' %}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> About</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <section id="about" class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2>We Search For The Perfect Courses!</h2>
+          <p class="lead">Choose from many options including free courses and university degrees at a breakthrough price. Learn at your own pace, 100% online.</p>
+          <img src="assets/img/about.jpg" alt="">
+          <p class="mt-4">Apply what you learn with self-paced quizzes and hands-on projects. Get feedback from a global community of learners.</p>
+        </div>
+        <div class="col-md-4">
+          {% if bestseller %}
+          {% for seller in bestseller %}
+          <div class="card">
+            <img class="card-img-top" src="{{seller.photo.url}}" alt="Seller of the month">
+            <div class="card-body">
+              <h5 class="card-title">Bestseller Of The Month</h5>
+              <h6 class="text-secondary">{{seller.name}}</h6>
+              <p class="card-text">{{ seller.description }}</p>
+            </div>
+          </div>
+          {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+<hr>
+
+<br>
+
+  <!-- Work -->
+  <section id="work" class="bg-dark text-white text-center">
+    <h2 class="display-4">We Work For You</h2>
+    <h4>Earn your bachelor’s or master’s degree online from a leading university for much less than similar on-campus programs. Learn from the same professors and graduate with the same credential as students who study on-campus.</h4>
+    <hr>
+    <a href="{% url 'courses' %}" class="btn btn-success text-white btn-lg">View Our Featured Courses</a>
+  </section>
+
+  <!-- Team -->
+  <section id="team" class="py-5">
+    <div class="container">
+      <h2 class="text-center">Our Team</h2>
+      <div class="row text-center">
+        {% if instructors %}
+          {% for instructor in instructors %}
+            <div class="col-md-4">
+              <img src="{{instructor.photo.url}}" alt="" class="rounded-circle mb-3">
+              <h4>{{instructor.name}}</h4>
+              <p class="text-success">
+                <i class="fas fa-award text-success mb-3"></i> Course Instructor</p>
+              <hr>
+              <p>
+                <i class="fas fa-phone"></i> {{instructor.phone}}</p>
+              <p>
+                <i class="fas fa-envelope-open"></i> {{instructor.email}} </p>
+            </div>
+          {% endfor %}
+      </div>
+      {% else %}
+      <p>Sorry, currently no instructors available!</p>
+      {% endif %}
+    </div>
+  </section>
+
+
+{% endblock %}

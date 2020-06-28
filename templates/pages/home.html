@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block content %}
+<!-- Showcase -->
+  <section id="showcase">
+    <div class="container text-center">
+      <div class="home-search p-5">
+        <div class="overlay p-5">
+          <h1 class="display-4 mb-4">
+            Search Your Desired Course
+          </h1>
+            <hr>
+          <p class="lead">Start streaming on-demand video lectures today from top instructors in subjects like business, computer science, data science, language learning, & more.</p>
+          <div class="search">
+            <form action="search.html">
+              <!-- Form Row 1 -->
+              <div class="form-row">
+                <div class="col-md-4 mb-3">
+                  <label class="sr-only">Keywords</label>
+                  <input type="text" name="keywords" class="form-control" placeholder="Keyword (Python, JavaScript, etc)">
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="sr-only">Course Name</label>
+                  <input type="text" name="course_name" class="form-control" placeholder="course_name">
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="sr-only">Topic</label>
+                  <select name="topic" class="form-control">
+                    <option selected="true" disabled="disabled">Topic (All)</option>
+                    <option value="AL">Web development</option>
+                    <option value="AK">Business</option>
+                    <option value="AZ">It & Software</option>
+                    <option value="AR">Office Productivity</option>
+                    <option value="CA">Personal Development</option>
+                    <option value="CO">Design</option>
+                    <option value="CT">Marketing</option>
+                    <option value="DE">Health & Fitness</option>
+                    <option value="DC">Music</option>
+                    <option value="DC">Language Learnign</option>
+                  </select>
+                </div>
+              </div>
+              <!-- Form Row 2 -->
+              <div class="form-row">
+                <div class="col-md-6 mb-3">
+                  <label class="sr-only">Language</label>
+                  <select name="language" class="form-control">
+                    <option selected="true" disabled="disabled">Available Languages</option>
+                    <option value="en">English</option>
+                    <option value="esp">Español</option>
+                    <option value="frs">Française</option>
+                    <option value="por">Português</option>
+                    <option value="bn">বাংলা</option>
+                    <option value="hnd">हिन्दी</option>
+                    <option value="arb">العربية</option>
+                    <option value="chn">吴语</option>
+                    <option value="jpn">中文</option>
+                    <option value="rs">Русский</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <select name="price" class="form-control" id="type">
+                    <option selected="true" disabled="disabled">Max Price (Any)</option>
+                    <option value="100000">৳1000</option>
+                    <option value="200000">৳2000</option>
+                    <option value="300000">৳3000</option>
+                    <option value="400000">৳4000</option>
+                    <option value="400000">৳5000</option>
+                    <option value="400000">৳6000</option>
+                    <option value="400000">৳7000</option>
+                    <option value="400000">৳8000</option>
+                    <option value="400000">৳9000</option>
+                    <option value="1000000">৳10k+</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-success btn-block mt-4" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<!-- Listings -->
+  <section id="listings" class="py-5">
+    <div class="container">
+      <h3 class="text-center mb-3">Latest Courses</h3>
+        <hr>
+      <div class="row">
+        {% if courses %}
+        <!-- Courses -->
+          {% for course in courses %}
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card listing-preview">
+              <img class="card-img-top" src="{{ course.photo.url }}" alt="">
+              <div class="card-img-overlay">
+                <h2>
+                  <span class="badge badge-secondary text-white">৳{{course.price | intcomma}}</span>
+                </h2>
+              </div>
+              <div class="card-body">
+                <div class="listing-heading text-center">
+                  <h4 class="text-primary">{{course.name}}</h4>
+                  <p>
+                    <i class="fas fa-map-marker text-secondary"></i> {{course.description}}</p>
+                </div>
+                <hr>
+                <div class="row py-2 text-secondary">
+                  <div class="col-6">
+                    <i class="fas fa-clock"></i>Length: {{course.length}} hours</div>
+                  <div class="col-6">
+                    <i class="fas fa-star-half-alt"></i> Rating: {{course.rating}}</div>
+                </div>
+                <div class="row py-2 text-secondary">
+                  <div class="col-6">
+                    <i class="fas fa-check-circle"></i> Bestseller: {{course.bestseller}}</div>
+                  <div class="col-6">
+                    <i class="fas fa-download"></i> Subtitle: {{course.subtitle}}</div>
+                </div>
+                <hr>
+                <div class="row py-2 text-secondary">
+                  <div class="col-6">
+                    <i class="fas fa-user"></i> {{course.instructor}}</div>
+                </div>
+                <div class="row text-secondary pb-2">
+                  <div class="col-6">
+                    <i class="fas fa-clock"></i> {{course.date_created|timesince}}</div>
+                </div>
+                <hr>
+                <a href="{% url 'course' course.id %}" class="btn btn-outline-success btn-block">Buy Now</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p>Sorry, No courses available</p>
+        {% endif %}
+
+      </div>
+    </div>
+  </section>
+
+
+
+
+<section id="services" class="py-5 bg-secondary text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-comment fa-4x mr-4"></i>
+          <hr>
+          <h3>Learn the latest skills</h3>
+          <p>like business analytics, graphic design, Python, and more</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-briefcase fa-4x mr-4"></i>
+          <hr>
+          <h3>Get ready for a career</h3>
+          <p>in high-demand fields like IT, AI and cloud engineering</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-thumbs-up fa-4x mr-4"></i>
+          <hr>
+          <h3>Upskill your organization</h3>
+          <p>with on-demand training and development programs</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
